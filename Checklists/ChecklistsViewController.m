@@ -7,6 +7,7 @@
 //
 
 #import "ChecklistsViewController.h"
+#import "ChecklistsItem.h"
 
 @interface ChecklistsViewController ()
 
@@ -14,28 +15,36 @@
 
 @implementation ChecklistsViewController
 {
-    NSString *_row0Text;
-    NSString *_row1Text;
-    NSString *_row2Text;
-    NSString *_row3Text;
-    NSString *_row4Text;
-    
-    BOOL _row0Checked;
-    BOOL _row1Checked;
-    BOOL _row2Checked;
-    BOOL _row3Checked;
-    BOOL _row4Checked;
+    NSMutableArray *_items;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    _row0Text = @"Walk the Dog";
-    _row1Text = @"Brush my teeth";
-    _row2Text = @"Learn iOS development";
-    _row3Text = @"Soccer practice";
-    _row4Text = @"Eat ice cream";
+    _items = [[NSMutableArray alloc] initWithCapacity:20];
+    ChecklistsItem *item;
+    
+    item = [[ChecklistsItem alloc] init];
+    item.text = @"Walk the Dog";
+    item.checked = NO;
+    [_items addObject:item];
+    item = [[ChecklistsItem alloc] init];
+    item.text = @"Brush my teeth";
+    item.checked = YES;
+    [_items addObject:item];
+    item = [[ChecklistsItem alloc] init];
+    item.text = @"Learn iOS development";
+    item.checked = YES;
+    [_items addObject:item];
+    item = [[ChecklistsItem alloc] init];
+    item.text = @"Soccer practice";
+    item.checked = NO;
+    [_items addObject:item];
+    item = [[ChecklistsItem alloc] init];
+    item.text = @"Eat ice cream";
+    item.checked = YES;
+    [_items addObject:item];
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,50 +55,33 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return [_items count];
 }
 
-- (void)configureCheckmarkForCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)configureCheckmarkForCell:(UITableViewCell *)cell withCheckListItem:(ChecklistsItem *)item
 {
-    BOOL isChecked = NO;
-    if(indexPath.row == 0) {
-        isChecked = _row0Checked;
-    } else if (indexPath.row == 1) {
-        isChecked = _row1Checked;
-    } else if(indexPath.row == 2) {
-        isChecked = _row2Checked;
-    } else if(indexPath.row == 3) {
-        isChecked = _row3Checked;
-    } else if(indexPath.row == 4) {
-        isChecked = _row4Checked;
-    }
-    
-    if(isChecked) {
+    if(item.checked) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
 }
 
+- (void)configureTextForCell:(UITableViewCell *)cell withCheckListItem:(ChecklistsItem *)item
+{
+    UILabel *label = (UILabel *)[cell viewWithTag:1000];
+    
+    label.text = item.text;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ChecklistItem"];
+    ChecklistsItem *item = _items[indexPath.row];
     
-    UILabel *label = (UILabel *)[cell viewWithTag:1000];
+    [self configureCheckmarkForCell:cell withCheckListItem:item];
     
-    [self configureCheckmarkForCell:cell atIndexPath:indexPath];
-    
-    if(indexPath.row == 0){
-        label.text = _row0Text;
-    }else if(indexPath.row == 1){
-        label.text = _row1Text;
-    }else if(indexPath.row == 2){
-        label.text = _row2Text;
-    }else if(indexPath.row == 3){
-        label.text = _row3Text;
-    }else if(indexPath.row == 4){
-        label.text = _row4Text;
-    }
+    [self configureTextForCell:cell withCheckListItem:item];
     
     return cell;
 }
@@ -97,28 +89,33 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    BOOL isChecked = NO;
+    ChecklistsItem *item = _items[indexPath.row];
     
-    if (indexPath.row == 0) {
-        isChecked = _row0Checked;
-        _row0Checked = !_row0Checked;
-    } else if (indexPath.row == 1) {
-        isChecked = _row1Checked;
-        _row1Checked = !_row1Checked;
-    } else if (indexPath.row == 2) {
-        isChecked = _row2Checked;
-        _row2Checked = !_row2Checked;
-    } else if (indexPath.row == 3) {
-        isChecked = _row3Checked;
-        _row3Checked = !_row3Checked;
-    } else if (indexPath.row == 4) {
-        isChecked = _row4Checked;
-        _row4Checked = !_row4Checked;
-    }
+    [item toggleChecked];
     
-    [self configureCheckmarkForCell:cell atIndexPath:indexPath];
+    [self configureCheckmarkForCell:cell withCheckListItem:item];
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (IBAction)addItem
+{
+    ChecklistsItem *item = [[ChecklistsItem alloc] init];
+    item.text = @"I am a new row";
+    item.checked = NO;
+    [_items insertObject:item atIndex:0];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    NSArray *indexPaths = @[indexPath];
+    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [_items removeObjectAtIndex:indexPath.row];
+    
+    NSArray *indexPaths = @[indexPath];
+    [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 @end

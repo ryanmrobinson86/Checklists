@@ -21,6 +21,7 @@
 		681D569B18E720080042C185 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 681D567D18E720080042C185 /* UIKit.framework */; };
 		681D56A318E720080042C185 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 681D56A118E720080042C185 /* InfoPlist.strings */; };
 		681D56A518E720080042C185 /* ChecklistsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 681D56A418E720080042C185 /* ChecklistsTests.m */; };
+		681D56B018E746960042C185 /* ChecklistsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 681D56AF18E746960042C185 /* ChecklistsItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,8 @@
 		681D56A018E720080042C185 /* ChecklistsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ChecklistsTests-Info.plist"; sourceTree = "<group>"; };
 		681D56A218E720080042C185 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		681D56A418E720080042C185 /* ChecklistsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChecklistsTests.m; sourceTree = "<group>"; };
+		681D56AE18E746960042C185 /* ChecklistsItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChecklistsItem.h; sourceTree = "<group>"; };
+		681D56AF18E746960042C185 /* ChecklistsItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChecklistsItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +122,8 @@
 				681D568F18E720080042C185 /* ChecklistsViewController.m */,
 				681D569118E720080042C185 /* Images.xcassets */,
 				681D568018E720080042C185 /* Supporting Files */,
+				681D56AE18E746960042C185 /* ChecklistsItem.h */,
+				681D56AF18E746960042C185 /* ChecklistsItem.m */,
 			);
 			path = Checklists;
 			sourceTree = "<group>";
@@ -253,6 +258,7 @@
 				681D568618E720080042C185 /* main.m in Sources */,
 				681D568A18E720080042C185 /* ChecklistsAppDelegate.m in Sources */,
 				681D569018E720080042C185 /* ChecklistsViewController.m in Sources */,
+				681D56B018E746960042C185 /* ChecklistsItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
