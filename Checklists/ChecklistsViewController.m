@@ -98,12 +98,9 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-- (IBAction)addItem
+- (void)addItem:(ChecklistsItem *)newItem
 {
-    ChecklistsItem *item = [[ChecklistsItem alloc] init];
-    item.text = @"I am a new row";
-    item.checked = NO;
-    [_items insertObject:item atIndex:0];
+    [_items insertObject:newItem atIndex:0];
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     NSArray *indexPaths = @[indexPath];
@@ -116,6 +113,28 @@
     
     NSArray *indexPaths = @[indexPath];
     [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"AddItem"]){
+        UINavigationController *navigationController = segue.destinationViewController;
+        
+        ChecklistsAddItemViewController *controller = (ChecklistsAddItemViewController *)navigationController.topViewController;
+        
+        controller.delegate = self;
+    }
+}
+
+- (void)addItemViewControllerDidCancel:(ChecklistsAddItemViewController *)controller
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)addItemViewController:(ChecklistsAddItemViewController *)controller didFinishAddingItem:(ChecklistsItem *)item
+{
+    [self addItem:item];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
