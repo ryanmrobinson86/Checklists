@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 RRobinson. All rights reserved.
 //
 
-#import "ChecklistsAddItemViewController.h"
+#import "ChecklistsItemDetailViewController.h"
 #import "ChecklistsItem.h"
 
-@interface ChecklistsAddItemViewController ()
+@interface ChecklistsItemDetailViewController ()
 
 @end
 
-@implementation ChecklistsAddItemViewController
+@implementation ChecklistsItemDetailViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -28,11 +28,11 @@
 {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    if (self.itemToEdit) {
+        self.title = @"Edit Item";
+        self.textField.text = self.itemToEdit.text;
+        self.doneBarButton.enabled = YES;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,16 +55,21 @@
 
 - (IBAction)cancel
 {
-    [self.delegate addItemViewControllerDidCancel:self];
+    [self.delegate itemDetailViewControllerDidCancel:self];
 }
 
 - (IBAction)done
 {
-    ChecklistsItem *item = [[ChecklistsItem alloc] init];
-    item.text = self.textField.text;
-    item.checked = NO;
-    
-    [self.delegate addItemViewController:self didFinishAddingItem:(ChecklistsItem *)item];
+    if(!self.itemToEdit) {
+        ChecklistsItem *item = [[ChecklistsItem alloc] init];
+        item.text = self.textField.text;
+        item.checked = NO;
+        
+        [self.delegate itemDetailViewController:self didFinishAddingItem:(ChecklistsItem *)item];
+    } else {
+        self.itemToEdit.text = self.textField.text;
+        [self.delegate itemDetailViewController:self didFinishEditingItem:self.itemToEdit];
+    }
 }
 
 - (BOOL)textField:(UITextField *)theTextField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string

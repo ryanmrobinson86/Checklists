@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ChecklistsAddItemViewController.h"
+#import "ChecklistsItemDetailViewController.h"
 
-@interface ChecklistsViewController : UITableViewController <ChecklistsAddItemViewControllerDelegate>
+@interface ChecklistsViewController : UITableViewController <ChecklistsItemDetailViewControllerDelegate>
 
 - (void)addItem:(ChecklistsItem *)newItem;
 
