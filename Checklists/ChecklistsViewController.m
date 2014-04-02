@@ -18,33 +18,53 @@
     NSMutableArray *_items;
 }
 
+- (NSString *)documentsDirectory
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths firstObject];
+    return documentsDirectory;
+}
+
+- (NSString *) dataFilePath
+{
+    return [[self documentsDirectory] stringByAppendingPathComponent:@"Checklists.plist"];
+}
+
+- (void)saveChecklistItems
+{
+    NSMutableData *data = [[NSMutableData alloc] init];
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+    
+    [archiver encodeObject:_items forKey:@"ChecklistItems"];
+    [archiver finishEncoding];
+    [data writeToFile:[self dataFilePath] atomically:YES];
+}
+
+- (void)loadChecklistItems
+{
+    NSString *path = [self dataFilePath];
+    if([[NSFileManager defaultManager] fileExistsAtPath:path]){
+        NSData *data = [[NSData alloc] initWithContentsOfFile:path];
+        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+        
+        _items = [unarchiver decodeObjectForKey:@"ChecklistItems"];
+        [unarchiver finishDecoding];
+    } else {
+        _items = [[NSMutableArray alloc] initWithCapacity:20];
+    }
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if((self = [super initWithCoder:aDecoder])){
+        [self loadChecklistItems];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    _items = [[NSMutableArray alloc] initWithCapacity:20];
-    ChecklistsItem *item;
-    
-    item = [[ChecklistsItem alloc] init];
-    item.text = @"Walk the Dog";
-    item.checked = NO;
-    [_items addObject:item];
-    item = [[ChecklistsItem alloc] init];
-    item.text = @"Brush my teeth";
-    item.checked = YES;
-    [_items addObject:item];
-    item = [[ChecklistsItem alloc] init];
-    item.text = @"Learn iOS development";
-    item.checked = YES;
-    [_items addObject:item];
-    item = [[ChecklistsItem alloc] init];
-    item.text = @"Soccer practice";
-    item.checked = NO;
-    [_items addObject:item];
-    item = [[ChecklistsItem alloc] init];
-    item.text = @"Eat ice cream";
-    item.checked = YES;
-    [_items addObject:item];
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,6 +86,8 @@
     } else {
         checkmark.hidden = YES;
     }
+    
+    [self saveChecklistItems];
 }
 
 - (void)configureTextForCell:(UITableViewCell *)cell withCheckListItem:(ChecklistsItem *)item
@@ -117,6 +139,8 @@
 {
     [_items removeObjectAtIndex:indexPath.row];
     
+    [self saveChecklistItems];
+    
     NSArray *indexPaths = @[indexPath];
     [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
 }
@@ -149,6 +173,7 @@
 - (void)itemDetailViewController:(ChecklistsItemDetailViewController *)controller didFinishAddingItem:(ChecklistsItem *)item
 {
     [self addItem:item];
+    [self saveChecklistItems];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -160,6 +185,7 @@
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     
     [self configureTextForCell:cell withCheckListItem:item];
+    [self saveChecklistItems];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
