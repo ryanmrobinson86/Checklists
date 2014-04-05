@@ -6,14 +6,15 @@
 //  Copyright (c) 2014 RRobinson. All rights reserved.
 //
 
-#import "ChecklistsViewController.h"
-#import "ChecklistsItem.h"
+#import "ChecklistViewController.h"
+#import "ChecklistItem.h"
+#import "Checklist.h"
 
-@interface ChecklistsViewController ()
+@interface ChecklistViewController ()
 
 @end
 
-@implementation ChecklistsViewController
+@implementation ChecklistViewController
 {
     NSMutableArray *_items;
 }
@@ -65,6 +66,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = self.checklist.name;
 }
 
 - (void)didReceiveMemoryWarning
@@ -78,7 +80,7 @@
     return [_items count];
 }
 
-- (void)configureCheckmarkForCell:(UITableViewCell *)cell withCheckListItem:(ChecklistsItem *)item
+- (void)configureCheckmarkForCell:(UITableViewCell *)cell withCheckListItem:(ChecklistItem *)item
 {
     UILabel *checkmark = (UILabel *)[cell viewWithTag:1001];
     if(item.checked) {
@@ -90,7 +92,7 @@
     [self saveChecklistItems];
 }
 
-- (void)configureTextForCell:(UITableViewCell *)cell withCheckListItem:(ChecklistsItem *)item
+- (void)configureTextForCell:(UITableViewCell *)cell withCheckListItem:(ChecklistItem *)item
 {
     UILabel *label = (UILabel *)[cell viewWithTag:1000];
     
@@ -100,7 +102,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ChecklistItem"];
-    ChecklistsItem *item = _items[indexPath.row];
+    ChecklistItem *item = _items[indexPath.row];
     
     [self configureCheckmarkForCell:cell withCheckListItem:item];
     
@@ -112,7 +114,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    ChecklistsItem *item = _items[indexPath.row];
+    ChecklistItem *item = _items[indexPath.row];
     
     [item toggleChecked];
     
@@ -128,7 +130,7 @@
     [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
-- (void)addItem:(ChecklistsItem *)newItem
+- (void)addItem:(ChecklistItem *)newItem
 {
     [_items insertObject:newItem atIndex:0];
     
@@ -150,13 +152,13 @@
     if([segue.identifier isEqualToString:@"AddItem"]){
         UINavigationController *navigationController = segue.destinationViewController;
         
-        ChecklistsItemDetailViewController *controller = (ChecklistsItemDetailViewController *)navigationController.topViewController;
+        ItemDetailViewController *controller = (ItemDetailViewController *)navigationController.topViewController;
         
         controller.delegate = self;
     }else if ([segue.identifier isEqualToString:@"EditItem"]){
         UINavigationController *navigationController = segue.destinationViewController;
         
-        ChecklistsItemDetailViewController *controller = (ChecklistsItemDetailViewController *)navigationController.topViewController;
+        ItemDetailViewController *controller = (ItemDetailViewController *)navigationController.topViewController;
         
         controller.delegate = self;
         
@@ -165,19 +167,19 @@
     }
 }
 
-- (void)itemDetailViewControllerDidCancel:(ChecklistsItemDetailViewController *)controller
+- (void)itemDetailViewControllerDidCancel:(ItemDetailViewController *)controller
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)itemDetailViewController:(ChecklistsItemDetailViewController *)controller didFinishAddingItem:(ChecklistsItem *)item
+- (void)itemDetailViewController:(ItemDetailViewController *)controller didFinishAddingItem:(ChecklistItem *)item
 {
     [self addItem:item];
     [self saveChecklistItems];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)itemDetailViewController:(ChecklistsItemDetailViewController *)controller didFinishEditingItem:(ChecklistsItem *)item
+- (void)itemDetailViewController:(ItemDetailViewController *)controller didFinishEditingItem:(ChecklistItem *)item
 {
     NSInteger index = [_items indexOfObject:item];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];

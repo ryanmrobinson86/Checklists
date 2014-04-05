@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 RRobinson. All rights reserved.
 //
 
-#import "ChecklistsItem.h"
+#import "ChecklistItem.h"
 
-@implementation ChecklistsItem
+@implementation ChecklistItem
 
 -(void)toggleChecked;
 {
