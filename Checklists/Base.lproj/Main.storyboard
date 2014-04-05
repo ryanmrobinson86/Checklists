@@ -20,7 +20,7 @@
                     <navigationItem key="navigationItem" title="Checklists" id="R3u-DQ-t7Z">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="HIK-ss-c21">
                             <connections>
-                                <segue destination="yz7-X6-10h" kind="modal" identifier="AddChecklist" id="hsu-7N-Knu"/>
+                                <segue destination="yz7-X6-10h" kind="modal" identifier="EditChecklist" id="hsu-7N-Knu"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -197,7 +197,7 @@
             </objects>
             <point key="canvasLocation" x="1175" y="118"/>
         </scene>
-        <!--List Detail View Controller - Add Checklist-->
+        <!--List Detail View Controller - Edit Checklist-->
         <scene sceneID="ykK-44-C7W">
             <objects>
                 <tableViewController id="mK9-w3-SnL" customClass="ListDetailViewController" sceneMemberID="viewController">
@@ -236,7 +236,7 @@
                             <outlet property="delegate" destination="mK9-w3-SnL" id="1wu-te-NIz"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Add Checklist" id="jxH-m0-OPk">
+                    <navigationItem key="navigationItem" title="Edit Checklist" id="jxH-m0-OPk">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="vHZ-be-DCd">
                             <connections>
                                 <action selector="cancel" destination="mK9-w3-SnL" id="zR0-U0-Spi"/>

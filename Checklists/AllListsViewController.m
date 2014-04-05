@@ -28,19 +28,12 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    Checklist *checklist = self.dataModel.lists[indexPath.row];
-    
-    [self performSegueWithIdentifier:@"ShowChecklist" sender:checklist];
-}
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([segue.identifier isEqualToString:@"ShowChecklist"]) {
         ChecklistViewController *controller = segue.destinationViewController;
         controller.checklist = sender;
-    } else if([segue.identifier isEqualToString:@"AddChecklist"]) {
+    } else if([segue.identifier isEqualToString:@"EditChecklist"]) {
         UINavigationController *navigationController = segue.destinationViewController;
         
         ListDetailViewController *controller = (ListDetailViewController *)navigationController.topViewController;
@@ -48,6 +41,30 @@
         controller.delegate = self;
         controller.checklistToEdit = nil;
     }
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    self.navigationController.delegate = self;
+    
+    NSInteger currentChecklist = [self.dataModel indexOfSelectedChecklist];
+    
+    if (currentChecklist > -1 && currentChecklist < [self.dataModel.lists count]) {
+        Checklist *checklist = self.dataModel.lists[currentChecklist];
+        
+        [self performSegueWithIdentifier:@"ShowChecklist" sender:checklist];
+    }
+}
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.dataModel setIndexofSelectedChecklist:indexPath.row];
+    
+    Checklist *checklist = self.dataModel.lists[indexPath.row];
+    
+    [self performSegueWithIdentifier:@"ShowChecklist" sender:checklist];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -78,6 +95,10 @@
     
     NSArray *indexPaths = @[indexPath];
     [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    if (![self.dataModel.lists count]) {
+        [self.dataModel setFirstTime];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
@@ -121,6 +142,13 @@
     cell.textLabel.text = checklist.name;
     
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if (viewController == self) {
+        [self.dataModel setIndexofSelectedChecklist:-1];
+    }
 }
 
 @end

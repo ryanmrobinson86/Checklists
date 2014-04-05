@@ -14,5 +14,8 @@
 
 - (void)saveChecklists;
 - (void)loadChecklists;
+- (NSInteger)indexOfSelectedChecklist;
+- (void)setIndexofSelectedChecklist:(NSInteger)index;
+- (void)setFirstTime;
 
 @end
