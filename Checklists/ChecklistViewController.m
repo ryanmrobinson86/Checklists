@@ -36,6 +36,7 @@
     } else {
         checkmark.hidden = YES;
     }
+    checkmark.textColor = self.view.tintColor;
 }
 
 - (void)configureTextForCell:(UITableViewCell *)cell withCheckListItem:(ChecklistItem *)item
