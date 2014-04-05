@@ -43,6 +43,13 @@
     }
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.tableView reloadData];
+}
+
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -75,16 +82,24 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
+    Checklist *list = self.dataModel.lists[indexPath.row];
+    int itemCount = [list countUncheckedItems];
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
-    Checklist *list = self.dataModel.lists[indexPath.row];
     cell.textLabel.text = list.name;
     cell.accessoryType = UITableViewCellAccessoryDetailButton;
+    cell.imageView.image = [UIImage imageNamed:list.iconName];
+    if(itemCount)
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%d items remaining", itemCount];
+    else if(![list.items count])
+        cell.detailTextLabel.text = @"No tasks";
+    else
+        cell.detailTextLabel.text = @"All done!";
     
     return cell;
 }
@@ -122,24 +137,19 @@
 
 - (void)listDetailViewcontroller:(ListDetailViewController *)controller didFinishAddingChecklist:(Checklist *)checklist
 {
-    NSInteger index = [self.dataModel.lists count];
     [self.dataModel.lists addObject:checklist];
+    [self.dataModel sortChecklists];
     
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-    
-    NSArray *indexPaths = @[indexPath];
-    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView reloadData];
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)listDetailViewcontroller:(ListDetailViewController *)controller didFinishEditingChecklist:(Checklist *)checklist
 {
-    NSInteger index = [self.dataModel.lists indexOfObject:checklist];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    [self.dataModel sortChecklists];
     
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    cell.textLabel.text = checklist.name;
+    [self.tableView reloadData];
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }

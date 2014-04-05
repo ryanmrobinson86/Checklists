@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		680B585518F053D200F6FAD3 /* IconPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 680B585418F053D200F6FAD3 /* IconPickerViewController.m */; };
 		681D567A18E720080042C185 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 681D567918E720080042C185 /* Foundation.framework */; };
 		681D567C18E720080042C185 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 681D567B18E720080042C185 /* CoreGraphics.framework */; };
 		681D567E18E720080042C185 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 681D567D18E720080042C185 /* UIKit.framework */; };
@@ -40,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		680B585318F053D200F6FAD3 /* IconPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconPickerViewController.h; sourceTree = "<group>"; };
+		680B585418F053D200F6FAD3 /* IconPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconPickerViewController.m; sourceTree = "<group>"; };
 		681D567618E720080042C185 /* Checklists.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Checklists.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		681D567918E720080042C185 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		681D567B18E720080042C185 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -133,8 +136,6 @@
 				681D568818E720080042C185 /* ChecklistsAppDelegate.h */,
 				681D568918E720080042C185 /* ChecklistsAppDelegate.m */,
 				681D568B18E720080042C185 /* Main.storyboard */,
-				681D568E18E720080042C185 /* ChecklistViewController.h */,
-				681D568F18E720080042C185 /* ChecklistViewController.m */,
 				681D569118E720080042C185 /* Images.xcassets */,
 				681D568018E720080042C185 /* Supporting Files */,
 				681DE2B918EE26A30080D7B3 /* AllListsViewController.h */,
@@ -143,8 +144,12 @@
 				681DE2BD18EE2A550080D7B3 /* Checklist.m */,
 				681D56AE18E746960042C185 /* ChecklistItem.h */,
 				681D56AF18E746960042C185 /* ChecklistItem.m */,
+				681D568E18E720080042C185 /* ChecklistViewController.h */,
+				681D568F18E720080042C185 /* ChecklistViewController.m */,
 				68983E3318EFA45700B1D974 /* DataModel.h */,
 				68983E3418EFA45700B1D974 /* DataModel.m */,
+				680B585318F053D200F6FAD3 /* IconPickerViewController.h */,
+				680B585418F053D200F6FAD3 /* IconPickerViewController.m */,
 				681D56B718E77DF20042C185 /* ItemDetailViewController.h */,
 				681D56B818E77DF20042C185 /* ItemDetailViewController.m */,
 				68983E3018EF80E300B1D974 /* ListDetailViewController.h */,
@@ -281,6 +286,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				681D568618E720080042C185 /* main.m in Sources */,
+				680B585518F053D200F6FAD3 /* IconPickerViewController.m in Sources */,
 				681D568A18E720080042C185 /* ChecklistsAppDelegate.m in Sources */,
 				68983E3518EFA45700B1D974 /* DataModel.m in Sources */,
 				681DE2BB18EE26A30080D7B3 /* AllListsViewController.m in Sources */,

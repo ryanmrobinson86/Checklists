@@ -78,6 +78,7 @@
         [self loadChecklists];
         [self registerDefaults];
         [self handleFirstTime];
+        [self sortChecklists];
     }
     return self;
 }
@@ -95,6 +96,11 @@
 - (void)setFirstTime
 {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirstTime"];
+}
+
+- (void)sortChecklists
+{
+    [self.lists sortUsingSelector:@selector(compare:)];
 }
 
 @end
