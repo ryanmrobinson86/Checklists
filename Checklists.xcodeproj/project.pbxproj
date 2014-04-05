@@ -26,6 +26,7 @@
 		681DE2BB18EE26A30080D7B3 /* AllListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 681DE2BA18EE26A30080D7B3 /* AllListsViewController.m */; };
 		681DE2BE18EE2A560080D7B3 /* Checklist.m in Sources */ = {isa = PBXBuildFile; fileRef = 681DE2BD18EE2A550080D7B3 /* Checklist.m */; };
 		68983E3218EF80E300B1D974 /* ListDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68983E3118EF80E300B1D974 /* ListDetailViewController.m */; };
+		68983E3518EFA45700B1D974 /* DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 68983E3418EFA45700B1D974 /* DataModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,8 @@
 		681DE2BD18EE2A550080D7B3 /* Checklist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Checklist.m; path = ../Checklist.m; sourceTree = "<group>"; };
 		68983E3018EF80E300B1D974 /* ListDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListDetailViewController.h; sourceTree = "<group>"; };
 		68983E3118EF80E300B1D974 /* ListDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListDetailViewController.m; sourceTree = "<group>"; };
+		68983E3318EFA45700B1D974 /* DataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataModel.h; sourceTree = "<group>"; };
+		68983E3418EFA45700B1D974 /* DataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +147,8 @@
 				681DE2BD18EE2A550080D7B3 /* Checklist.m */,
 				68983E3018EF80E300B1D974 /* ListDetailViewController.h */,
 				68983E3118EF80E300B1D974 /* ListDetailViewController.m */,
+				68983E3318EFA45700B1D974 /* DataModel.h */,
+				68983E3418EFA45700B1D974 /* DataModel.m */,
 			);
 			path = Checklists;
 			sourceTree = "<group>";
@@ -277,6 +282,7 @@
 			files = (
 				681D568618E720080042C185 /* main.m in Sources */,
 				681D568A18E720080042C185 /* ChecklistsAppDelegate.m in Sources */,
+				68983E3518EFA45700B1D974 /* DataModel.m in Sources */,
 				681DE2BB18EE26A30080D7B3 /* AllListsViewController.m in Sources */,
 				68983E3218EF80E300B1D974 /* ListDetailViewController.m in Sources */,
 				681D569018E720080042C185 /* ChecklistViewController.m in Sources */,
