@@ -19,4 +19,6 @@
 - (void)setFirstTime;
 - (void)sortChecklists;
 
++ (NSInteger)nextChecklistItemId;
+
 @end
